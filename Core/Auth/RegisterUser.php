@@ -13,6 +13,7 @@ class RegisterUser implements GenericUser
     private static $remember_token;
     private static $username;
     private static $confirm_password;
+
     /**
      * @inheritDoc
      */
@@ -52,6 +53,6 @@ class RegisterUser implements GenericUser
 
     public function save()
     {
-
+      if()
     }
 }
