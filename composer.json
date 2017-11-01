@@ -1,0 +1,15 @@
+{
+    "name": "itcyborg/safemooncore",
+    "description": "Driving core for Safemoon Framework",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "itcyb",
+            "email": "itcyborg@outlook.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php":">=5.4"
+    }
+}
