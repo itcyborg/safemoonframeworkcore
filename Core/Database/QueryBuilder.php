@@ -135,7 +135,7 @@ class QueryBuilder extends Connection
      * todo insert record
      */
 
-    public static function save($table, $parameters)
+    public static function save($table,array $parameters)
     {
         if (is_null($parameters)) {
             throw new Exception("No data provided");
