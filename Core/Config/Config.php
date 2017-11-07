@@ -52,4 +52,9 @@ class Config
     {
         return self::read()[$string];
     }
+
+    public static function mailer()
+    {
+        return self::read()['mail'];
+    }
 }

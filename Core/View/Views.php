@@ -18,6 +18,16 @@ class Views
         }
     }
 
+
+    public static function mailView($view)
+    {
+        $viewDir=self::dirRoot();
+        if(is_readable($viewDir.$view.".php"))
+        {
+            return file_get_contents($viewDir.$view.".php");
+        }
+    }
+
     private static function dirRoot()
     {
         $root = App::root();

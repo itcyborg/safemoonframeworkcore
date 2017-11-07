@@ -19,6 +19,11 @@ class PasswordService
         return password_hash($password, PASSWORD_BCRYPT, $options);
     }
 
+    public static function verify($password,$hash)
+    {
+        return password_verify($password,$hash);
+    }
+
     private static function hasLower($password)
     {
         if (preg_match("/[a-z]/", $password)) {

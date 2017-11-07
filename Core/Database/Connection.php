@@ -29,8 +29,8 @@ class Connection extends PDO
                 self::$password//, //database password
             //self::$options //additional options
             );
-        } catch (SafeExceptions $e) {
-            return $e->getMessage();
+        } catch (Exception $e) {
+            dd($e->getMessage());
         }
 
     }

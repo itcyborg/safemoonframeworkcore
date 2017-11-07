@@ -53,6 +53,37 @@ class RegisterUser implements GenericUser
 
     public function save()
     {
-      if()
+      if(self::$password===self::$confirm_password)
+      {
+          try {
+              ##code here
+              $db=DB::save('users',[
+                  'username'=>self::$username,
+                  'email'=>self::$email,
+                  'password'=>PasswordService::hash(self::$password),
+              ]);
+              if($db)
+              {
+                  Auth::setUser([
+                      'session_id'=>SessionManager::create([
+                          'username'=>self::$username,
+                          'email'=>self::$email,
+                          'loggedin'=>true,
+                          'id'=>DB::idFromEmail('users',self::$email)
+                      ]),
+                      'username'=>self::$username,
+                      'email'=>self::$email,
+                      'loggedin'=>true,
+                      'id'=>DB::idFromEmail('users',self::$email)
+                  ]);
+              }
+              return $db;
+        } catch (Exception $e) {
+              ##handle exceptions here
+              return $e->getMessage();
+        }
+      }else {
+        throw new Exception("Password does not match", 1);
+      }
     }
 }

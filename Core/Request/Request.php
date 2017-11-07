@@ -8,16 +8,27 @@
 
 class Request
 {
+    public static $slug=[];
     public static function uri()
     {
-        return trim(
+        dd(Router::$routes);
+        $url=trim(
             parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH),
             "/"
         );
+        return $url;
     }
 
     public static function method()
     {
         return $_SERVER['REQUEST_METHOD'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function getPrevious()
+    {
+        return self::$previous;
     }
 }

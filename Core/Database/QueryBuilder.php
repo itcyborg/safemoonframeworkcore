@@ -55,6 +55,45 @@ class QueryBuilder extends Connection
 
     public static function Find($table, $id)
     {
+        $statement=sprintf('select * from %s where id="%s"',$table,$id);
+        try {
+            $connection=Connection::make();
+            ##code here
+            $statement = $connection->prepare($statement);
+            $statement->execute();
+            return $statement->fetch(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            ##handle exceptions here
+            return $e->getMessage();
+        }
+    }
+
+    public static function FindColumn($table,$parameters)
+    {
+        try {
+            ##code here
+            $sql=null;
+            foreach ($parameters as $parameter=>$value) {
+                if($sql==null)
+                {
+                    $sql=$parameter."='".$value."'";
+                }else{
+                    $sql.=$parameter."='".$value."'";
+                }
+            }
+            $connection=Connection::make();
+            $statement = sprintf(
+                'select * from %s where %s',
+                $table,
+                $sql
+            );
+            $statement=$connection->prepare($statement);
+            $statement->execute();
+            return ['count'=>$statement->rowCount(),'result'=>$statement->fetchAll(PDO::FETCH_CLASS)];
+        } catch (Exception $e) {
+            ##handle exceptions here
+            return $e->getMessage();
+        }
     }
 
     public static function First($table)
@@ -152,8 +191,8 @@ class QueryBuilder extends Connection
             $connection = Connection::make();
             $statement = $connection->prepare($sql);
             return $statement->execute($parameters);
-        } catch (Exception $e) {
-            return $e->getMessage();
+        } catch (PDOException $e) {
+            dd($e->getMessage());
         }
     }
 
@@ -170,6 +209,26 @@ class QueryBuilder extends Connection
             return $e->getMessage();
         }
 
+    }
+
+    public static function idFromEmail($table,$email)
+    {
+        $sql = sprintf(
+            'select * from %s where email="%s"',
+            $table,
+            $email
+
+        );
+        //insert into (name) values (:name)
+
+        try {
+            $connection = Connection::make();
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            return $statement->fetch(PDO::FETCH_OBJ)->id;
+        } catch (PDOException $e) {
+            dd($e->getMessage());
+        }
     }
 
 }
