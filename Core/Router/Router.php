@@ -15,10 +15,10 @@ class Router
     ];
 
     public static $previous;
+
     public static $call = [];
     public static $controller = [];
     private static $path;
-    private static $parameter=[];
 
     public function __construct()
     {
