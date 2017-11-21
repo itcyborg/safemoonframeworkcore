@@ -91,5 +91,13 @@ class Auth extends Authenticate
          */
         Router::get('reset','resetController@index');
         Router::post('reset','resetController@reset');
+
+        /*
+         * password reset verify
+         */
+
+        Router::get('reset/verify','resetController@verifyIndex');
+        Router::post('reset/verify','resetController@verify');
+        Router::post('reset/password','resetController@newPassword');
     }
 }

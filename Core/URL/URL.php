@@ -12,4 +12,9 @@ class URL
     {
        return (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]/".$uri;
     }
+
+    public static function hostUri()
+    {
+        return (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]/";
+    }
 }

@@ -74,11 +74,4 @@ class Router
             self::$routes['POST'][$uri] = self::$path . $tmp[0];
         }
     }
-
-    public static function Auth()
-    {
-        $routes=Auth::Routes();
-//        return $routes;
-        $router->get('login','authController@loginIndex');
-    }
 }

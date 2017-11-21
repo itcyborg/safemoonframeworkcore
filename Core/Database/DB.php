@@ -10,6 +10,10 @@ class DB extends QueryBuilder
 {
     public static function save($table, array $data)
     {
-        return QueryBuilder::save($table, $data);
+        try {
+            return QueryBuilder::save($table, $data);
+        }catch (Exception $e){
+            throw new Exception($e);
+        }
     }
 }

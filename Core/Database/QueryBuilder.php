@@ -33,6 +33,23 @@ class QueryBuilder extends Connection
             return $e->getMessage();
         }
     }
+    public static function AllColumns($table,$parameters)
+    {
+        try {
+            $connection = Connection::make();
+            $sql = sprintf(
+                'select %s from %s',
+                $table.".".implode(','.$table.".",$parameters),
+                $table
+            );
+            $sql = $connection->prepare($sql);
+            $sql->execute();
+            return $sql->fetchAll(PDO::FETCH_CLASS);
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
 
     public static function Select($id, $table)
     {
@@ -137,12 +154,36 @@ class QueryBuilder extends Connection
 
     public static function update()
     {
-
     }
 
-    public static function updateColumn()
+    public static function updateColumn($table,$id,$data)
     {
-
+        if (is_null($data)) {
+            throw new Exception("No data provided");
+        }
+        try {
+            $sql=null;
+            foreach ($data as $datum=>$value) {
+                if($sql==null)
+                {
+                    $sql=$datum."='".$value."'";
+                }else{
+                    $sql.=$datum."='".$value."'";
+                }
+            }
+            $connection=Connection::make();
+            $statement = sprintf(
+                'update %s set %s where id="%s"',
+                $table,
+                $sql,
+                $id
+            );
+            $statement=$connection->prepare($statement);
+            $statement->execute();
+            return $statement->rowCount() ? true : false;
+        } catch (Exception $e) {
+            dd($e->getMessage());
+        }
     }
 
 
@@ -192,7 +233,7 @@ class QueryBuilder extends Connection
             $statement = $connection->prepare($sql);
             return $statement->execute($parameters);
         } catch (PDOException $e) {
-            dd($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 

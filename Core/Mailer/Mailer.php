@@ -38,7 +38,7 @@ class Mailer
         return $static;
     }
 
-    public function to($to)
+    public function to($to,$name=null)
     {
         if(is_array($to))
         {
@@ -46,7 +46,7 @@ class Mailer
                 self::$mail->addAddress($item,$value);
             }
         }else{
-            self::$mail->addAddress($to);
+            self::$mail->addAddress($to,$name);
         }
         return $this;
     }
